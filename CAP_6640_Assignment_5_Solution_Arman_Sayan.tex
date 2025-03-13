@@ -158,7 +158,38 @@ Stacking multiple convolution + pooling layers allows QRNNs to capture both shor
 
 \pagebreak
 
-\item[Problem 6:]  Explain the role of subword information in language understanding.
+\item[Problem 6:]  \hfill %Explain the role of subword information in language understanding.
+
+Subword information plays a critical role in NLP by bridging the gap between character-based and word-based representations.
+Instead of treating words as singular atomic units, subword models break words into smaller, meaningful components, 
+which improves model performance in multiple linguistic and computational aspects.
+
+By incorporating subwords, NLP models can handle rare and previously unseen words, significantly reducing errors in language modeling. 
+This approach is particularly valuable for morphologically complex languages like Turkish, where words can take many different forms. 
+Additionally, subword modeling helps reduce vocabulary size, making deep learning models more efficient without sacrificing expressiveness.
+Another key advantage is its ability to enhance translation quality and tokenization, ensuring better alignment across different languages and writing systems. 
+By leveraging subword information, models can achieve better generalization, improved computational efficiency, and enhanced performance in multilingual NLP tasks.
+
+Different languages present unique challenges when processing words, especially those with rich morphology like Turkish. 
+In such languages, words are often formed by adding multiple suffixes, which makes subword segmentation essential for better language modeling and machine translation.
+In Turkish, a single root word can take on many different forms through suffixation. Consider the word "kitaplarımızdan" (from our books). 
+The subword segmentation of this word would be 
+
+\begin{center}
+"kitap" + "lar" + "ımız" + "dan"
+\end{center}
+
+where each subword represents a meaningful morpheme.
+
+\begin{itemize}
+    \item kitap: root word, meaning "book"
+    \item lar: plural suffix, books
+    \item ımız: possessive suffix, (our books)
+    \item dan: ablative case suffix, (from our books) 
+\end{itemize}
+
+In a standard word-based model, "kitaplarımızdan" would be treated as a completely separate token, making it hard to generalize across different word forms. 
+However, by breaking it down into subwords, an NLP model can recognize morphological structures, improving performance in translation, text generation, and language modeling.
 
 \pagebreak
 
