@@ -226,7 +226,26 @@ Finally, the LSTM output is fed into a softmax layer to generate the translation
 
 \pagebreak
 
-\item[Problem 8:]  Explain byte pair encoding (BPE).
+\item[Problem 8:]  \hfill %Explain byte pair encoding (BPE).
+
+Byte Pair Encoding (BPE) is a subword tokenization method that efficiently processes text by iteratively merging frequently occurring character sequences. 
+It is widely used in modern NLP models like GPT, and other Transformer-based architectures to handle rare words and reduce vocabulary size. 
+Instead of relying on a fixed vocabulary of full words, BPE learns subword units dynamically, making it highly effective for morphologically rich languages and unseen words.
+
+It begins with individual characters and progressively merges the most frequent adjacent characters to create subwords. 
+This process is repeated until a predefined vocabulary size is reached. There are four main steps in the BPE algorithm.
+As the first step, each word in the corpus is split into its basic character units. Then, as the next step, we identify the most frequent adjacent character pairs.
+Thirdly, we replace the most frequent adjacent characters with a new subword unit.
+Finally, we repeat the process until the desired vocabulary size is met.
+
+Conside the Turkish word "evler" (houses). The BPE algorithm would tokenize it as follows:
+
+\begin{center}
+    $[e, v, l, e, r] \rightarrow [ev, l, e, r] \rightarrow [ev, le, r] \rightarrow [ev, ler]$
+\end{center}
+
+Instead of treating "evler" as a completely unique token, BPE identifies "ev" (house) and "ler" (plural suffix) as reusable subwords, 
+allowing the model to efficiently process words like "evde" ([ev, de], at home), "evimiz" ([ev, im], my house), and "evlerden" ([ev, ler, den], from houses).
 
 \pagebreak
 
