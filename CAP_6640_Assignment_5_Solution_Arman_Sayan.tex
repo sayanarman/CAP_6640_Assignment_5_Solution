@@ -19,28 +19,38 @@
 \item[Problem 1:]  \hfill %List and explain four methods for model comparison in natural language processing.
 
 \begin{enumerate}
-    \item \textbf{Bag of Vectors:} The Bag of Vectors model represents text as an unordered collection of word embeddings, 
-    making it computationally efficient for document classification. While it performs well in tasks that do not require sequential dependencies, 
-    its major drawback is the loss of word order and contextual relationships, limiting its effectiveness in complex NLP applications such as machine 
-    translation or sentiment analysis. Despite this, performance can be improved by introducing ReLU layers to add non-linearity, 
-    but it remains fundamentally constrained by its lack of sequence awareness.
+    %\item \textbf{Perplexity (PPL):} PPL is a measure of how well a probability distribution or language model predicts a sample. 
+    %It is calculated as the inverse probability of the test set, normalized by the number of words.
+    %
+    %\begin{center}
+    %    $\displaystyle{PPL(W) = 2^{(-\frac{1}{N}\sum{log_2{P(w_i)}})}}$
+    %\end{center}
+    %
+    %where $N$ is the number of words in the test set, and $P(w_i)$ is the probability assigned to the $i$-th word by the language model.
+    %
+    %Lower PPl values indicate better performance. It is a widely used metric for evaluating probabilistic language models like RNNs, LSTMs, and transformers.
+
+    \item \textbf{Bilingual Evaluation Understudy (BLEU):} BLEU is a measure of the accuracy of machine-translated text by comparing it to one or more human references by calculating
+    n-gram precision or n-gram overlap between each other. Higher BLEU scores indicate better translation quality like the actual human text.
+    It is commonly used metric in machine translation, text generation, and summarization tasks.
     
-    \item \textbf{Window Model:} The Window Model improves upon Bag of Vectors by considering a fixed number of surrounding words, 
-    allowing it to capture local context effectively. This makes it particularly useful for single-word classification tasks such as 
-    POS tagging and NER. However, since it only considers a small window of words at a time, it struggles with long-range dependencies, 
-    making it unsuitable for applications that require a broader contextual understanding.
+    \item \textbf{Recall-Oriented Understudy for Gisting Evaluation (ROUGE):} ROUGE is a measure of recall-based text similarity between machine-generated summaries and human references.
+    There are two types of ROUGE scores: ROUGE-N, which measures n-gram overlap with the following formula:
+
+    \begin{center}
+        $\displaystyle{ROUGE-N = \frac{\sum_{matched\ n-grams}}{\sum_{reference\ n-grams}}}$
+    \end{center}
     
-    \item \textbf{CNNs:} CNNs process text by applying convolutional filters over word embeddings, allowing them to detect meaningful 
-    n-gram patterns such as sentiment phrases or topic-specific keywords. They excel in text classification tasks in NLP and many others
-    as they are highly parallelizable and efficient on GPUs. However, CNNs struggle with long-range dependencies since they primarily 
-    focus on local patterns, and they require padding to handle varying sentence lengths, 
-    making them less suitable for tasks requiring a strong grasp of word order and context, such as machine translation.
+    ROUGE-L, which measures how well the longest subsequence matches between reference and generated text.
+    It is commonly used in text summarization tasks to evaluate the quality of generated summaries.
     
-    \item \textbf{RNNs:} Unlike CNNs, RNNs are designed to process text sequentially, maintaining a hidden state that carries information from previous words, 
-    making them highly effective for tasks like machine translation, speech recognition, and text generation. This structure allows RNNs to model long-term 
-    dependencies, providing a more contextual understanding of language. However, they suffer from slow training speeds due to their sequential nature, making 
-    them difficult to parallelize. Additionally, they are prone to the vanishing gradient problem, which hinders their ability to capture dependencies over long 
-    sequences unless enhancements like LSTMs or GRUs are applied.
+    \item \textbf{Metric for Evaluation of Translation with Explicit Ordering (METEOR):} METEOR is a translation evaluation metric improving on BLEU by considering 
+    exact match, stemming, synonyms, along with precision, recall, and fragmentation penalties. Compared to BLEU, it reveals higher relationships especially with the 
+    involvement of human judgements. It is used to evaluate the quality of machine-translated text and paraphrase.
+    
+    \item \textbf{BERTScore:} BERTScore uses pretrained BERT embeddings to measure similarity between generated and reference texts, capturing semantic 
+    meaning rather than just n-gram overlap. It is mostly used for complex NLP assessments like translation, summarization, and dialogue understanding.
+
 \end{enumerate}
 
 \pagebreak
@@ -251,10 +261,68 @@ allowing the model to efficiently process words like "evde" ([ev, de], at home),
 
 \item[Problem 9:]  Compare bottom-up and neural summarization.
 
+Bottom-up summarization first extracts important content from the original text and then generates a summary based on the extracted key phrases and sentences.
+This approach combines extractive and abstractive summarization, ensuring that the generated text remains factually consistent and informative.
+In the extractive phase, the main job is content selection where the most important phrases and sentences are identified by attention mechanisms, 
+TF-IDF, to score an rank importance before generating a summary.
+In the abstractive phase, selected content is rewritten using an encoder-decoder model such as BART or Transformer-based architectures 
+to ensure coherent, fluent, and factually grounded text generation.
+This concept balances informativeness and conciseness by combining extraction and generation.
+
+Neural summarization, on the other hand, is a fully end-to-end approach that directly generates summaries from input text using deep learning models such as 
+Seq2Seq, Transformers, and Reinforcement Learning-based models. Unlike bottom-up summarization, it does not explicitly extract key content but instead learns semantic representations of the entire document to generate a fluent summary.
+
+
 \pagebreak
 
-\item[Problem 10:]  Discuss a method for handling irrelevant responses, generic outputs, repetition, and inconsistent persona in natural language generation.
+\item[Problem 10:]  \hfill %Discuss a method for handling irrelevant responses, generic outputs, repetition, and inconsistent persona in natural language generation.
 
+\begin{enumerate}
+    \item \textbf{Irrelevant Responses:} Seq2Seq models optimize for the likelihood of a response $P(T|S)$, which can lead to off-topic replies.
+    With maximum mutual information (MMI) objective, we can introduce two additional terms as 
+
+    \begin{center}
+        argmax $P(T|S) - \lambda P(T)$
+    \end{center}
+
+    where $P(T|S)$ ensures the response logically connects with the input, and $P(T)$ penalizes generic responses by discouraging frequent outputs.
+    With this objective function, we reduce off-topic responses by ensuring bidirectional relevance between the input and generated text while
+    encouraging diversity by penalizing overused high-frequency responses.
+
+    \item \textbf{Generic Outputs:} Seq2Seq models prefer safe and high-likelihood replies. This is mostly cuased by MLE optimizing for high-probability words, 
+    making the model reluctant to generate richer, informative responses. To address this, we can ask model to upweight rare words in beam search to increases 
+    the probability of less frequent terms, leading to more diverse responses. Another approach could be sampling-based decoding stragegies like top-k sampling to
+    limit the word selection to the k-most probable tokens, and nucleus sampling to sample from the the set of words whose probabilities sum to p, 
+    preventing the model from always selecting the highest probability word.
+
+    \item \textbf{Repetition:} Seq2Seq models tend to repeat phrases within a response or generate similar responses across turns. This happens becuase of exposure bias, 
+    where the model only sees ground-truth sequences during training but must generate new sequences at inference, and overfitting on high-frequency patterns in training data.
+    To mitigate repetition, a simple fix could be blocking n-grams that have already been generated, preventing the model from repeating itself during beam search decoding.
+    There are also more sophisticated methods like coverage mechanism that tracks previously attended words and reduces focus on already covered parts of the text. 
+    Another approach is to introduce mutual information objectives that penalize duplicated phrases. Lastly, we can use reinforcement learning algorithm like SCST to 
+    reward model for producing diverse responses.
+    
+    \item \textbf{Inconsistent Persona:} Standard Seq2Seq dialogue models lack personality memory, leading to contradictory or incoherent persona-related responses.
+    Consider the scenario where a chatbot to simulate a travel assistant but fails to maintain a consistent persona throughout a conversation:
+
+    \begin{itemize}
+        \item User: "What’s your favorite city to visit?"
+        \item Chatbot: "I love visiting Paris! The culture and food are amazing."
+        \item User: "Have you ever been to France?"
+        \item Chatbot: "No, I’ve never traveled to Europe."
+        \item User: "Do you prefer Paris or London?"
+        \item Chatbot: "I think London is my favorite city!"
+    \end{itemize}
+
+    This is problematic as the chatbot contradicts itself, claiming to love Paris but later stating it has never been to Europe.
+    Furthermore, it switches preferences from Paris to London, indicating a lack of consistent persona. 
+    
+    To address this issue, early researchers back in 2016 proposed Persona-Embedded Seq2Seq Model, which encodes both user and AI persona embeddings into the dialogue model.
+    This mechanism ensures that responses are conditioned on a persistent personality. Another approach named PersonaChat was proposed in 2018 by another researcher group.
+    This is a dataset to train dialogue models by providing five explicit personality descriptions that the chatbot must adhere to throughout the conversation.
+    Since the chatbot is conditioned on a fixed persona, this prevents contradictions and encourages personality-driven replies.
+
+\end{enumerate}
 
 \end{description}
 
