@@ -1,0 +1,89 @@
+\documentclass[10pt]{article}
+\usepackage{url,hyperref}
+%\usepackage{times}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage[utf8]{inputenc}
+
+\begin{document}
+
+\noindent \textbf{CAP 6640 -- Natural Language Processing\hspace*{\fill}Spring 2025}\\
+\noindent{\bf Homework \#5} \hfill Due date: March 13, 2025
+
+%\vspace*{-0.1in}\paragraph{Instructions:}
+%Individual work. Cite all references. All submitted assignments must be typed. Using Latex is required. For \LaTeX, you may use your installation, or online IDEs (no installation required); e.g.,  \href{https://www.overleaf.com/}{www.overleaf.com}. Late submissions by at most 24 hours will be scaled down to 50\%; late beyond 24 hours will be worth 0\%. Total of 40 points. 
+
+\begin{description}
+\item[Problem 1:]  \hfill %List and explain four methods for model comparison in natural language processing.
+
+\begin{enumerate}
+    \item \textbf{Bag of Vectors:} The Bag of Vectors model represents text as an unordered collection of word embeddings, 
+    making it computationally efficient for document classification. While it performs well in tasks that do not require sequential dependencies, 
+    its major drawback is the loss of word order and contextual relationships, limiting its effectiveness in complex NLP applications such as machine 
+    translation or sentiment analysis. Despite this, performance can be improved by introducing ReLU layers to add non-linearity, 
+    but it remains fundamentally constrained by its lack of sequence awareness.
+    
+    \item \textbf{Window Model:} The Window Model improves upon Bag of Vectors by considering a fixed number of surrounding words, 
+    allowing it to capture local context effectively. This makes it particularly useful for single-word classification tasks such as 
+    POS tagging and NER. However, since it only considers a small window of words at a time, it struggles with long-range dependencies, 
+    making it unsuitable for applications that require a broader contextual understanding.
+    
+    \item \textbf{CNNs:} CNNs process text by applying convolutional filters over word embeddings, allowing them to detect meaningful 
+    n-gram patterns such as sentiment phrases or topic-specific keywords. They excel in text classification tasks in NLP and many others
+    as they are highly parallelizable and efficient on GPUs. However, CNNs struggle with long-range dependencies since they primarily 
+    focus on local patterns, and they require padding to handle varying sentence lengths, 
+    making them less suitable for tasks requiring a strong grasp of word order and context, such as machine translation.
+    
+    \item \textbf{RNNs:} Unlike CNNs, RNNs are designed to process text sequentially, maintaining a hidden state that carries information from previous words, 
+    making them highly effective for tasks like machine translation, speech recognition, and text generation. This structure allows RNNs to model long-term 
+    dependencies, providing a more contextual understanding of language. However, they suffer from slow training speeds due to their sequential nature, making 
+    them difficult to parallelize. Additionally, they are prone to the vanishing gradient problem, which hinders their ability to capture dependencies over long 
+    sequences unless enhancements like LSTMs or GRUs are applied.
+\end{enumerate}
+
+\pagebreak
+
+\item[Problem 2:]  Differentiate between vertical and horizontal gating.
+
+
+
+
+
+
+
+\pagebreak
+
+\item[Problem 3:]  Describe how batch normalization improves NLP model performance.
+
+\pagebreak
+
+\item[Problem 4:]  Explain how very deep CNNs process text.
+
+\pagebreak
+
+\item[Problem 5:]  Describe how QRNNs work conceptually and mathematically, including their purpose and a supporting figure.
+
+\pagebreak
+
+\item[Problem 6:]  Explain the role of subword information in language understanding.
+
+\pagebreak
+
+\item[Problem 7:]  Describe fully character-level neural machine translation.
+
+\pagebreak
+
+\item[Problem 8:]  Explain byte pair encoding (BPE).
+
+\pagebreak
+
+\item[Problem 9:]  Compare bottom-up and neural summarization.
+
+\pagebreak
+
+
+\item[Problem 10:]  Discuss a method for handling irrelevant responses, generic outputs, repetition, and inconsistent persona in natural language generation.
+
+
+\end{description}
+
+\end{document}
