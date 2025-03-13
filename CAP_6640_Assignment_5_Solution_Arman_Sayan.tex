@@ -64,13 +64,28 @@ Vertical and horizontal gating are two approaches used to regulate information w
     
 \end{enumerate}
 
-
-
-
-
 \pagebreak
 
-\item[Problem 3:]  Describe how batch normalization improves NLP model performance.
+\item[Problem 3:]  \hfill %Describe how batch normalization improves NLP model performance.
+
+Batch normalization is a widely used technique for CNNs to improve training stability and efficiency.
+It works by normalizing activations across a batch, ensuring that NN outputs have zero mean and unit variance, 
+which helps to prevent extreme activations that could slow down learning. 
+Additionally, batch normalization includes trainable scale $\gamma$ and shift $\beta$  parameters, 
+allowing the model to adjust the normalization dynamically rather than simply standardizing all activations.
+
+One of the main advantages of batch normalization is that it reduces internal covariate shift, 
+a problem where changing distributions of activations across layers make training less stable. 
+By normalizing inputs before they are passed to the next layer, batch normalization ensures that each layer receives consistently scaled data, 
+reducing the burden on later layers to adapt to distributional shifts. This leads to faster and more stable training.
+Furthermore, it also mitigates vanishing and exploding gradient problems, which commonly occur in deep networks. 
+By keeping activations within a reasonable range, it prevents gradients from shrinking too much or growing uncontrollably, 
+which can significantly slow down or disrupt training. In addition, it makes parameter initialization less critical, 
+since it automatically rescales outputs, reducing the need for carefully chosen weight initializations.
+Lastly benefit is that it allows higher learning rates without causing instability, making hyperparameter tuning more forgiving. 
+Typically, deep NLP models require very small learning rates to avoid divergence, but batch normalization stabilizes activations, 
+enabling the use of more aggressive learning rates that speed up convergence.
+
 
 \pagebreak
 
