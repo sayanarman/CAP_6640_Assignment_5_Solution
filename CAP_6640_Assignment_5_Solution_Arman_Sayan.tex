@@ -42,9 +42,27 @@
 
 \pagebreak
 
-\item[Problem 2:]  Differentiate between vertical and horizontal gating.
+\item[Problem 2:]  \hfill %Differentiate between vertical and horizontal gating.
 
+Gating mechanisms in NNs control the flow of information by selectively allowing or blocking certain values. 
+Vertical and horizontal gating are two approaches used to regulate information within deep learning architectures.
 
+\begin{enumerate}
+    \item \textbf{Horizontal Gating:} Horizontal gating regulates information flow across time steps in sequential models such as RNNs,
+    LSTMs, and GRUs. It helps models retain or discard past information at each time step, making it essential for handling long-term dependencies in sequential data.
+    A key example is the forget gate in LSTMs, which determines how much past information should be kept using the formula $f_t = \sigma(W_f h_{t-1} + U_f x_t + b_f)$.
+    Horizontal gating is crucial in machine translation, speech recognition, and NLP tasks, where preserving context over time is necessary. 
+    However, training these models on very long sequences can be challenging, sometimes requiring attention mechanisms to improve performance.
+
+    \item \textbf{Vertical Gating:} Vertical gating controls information flow across layers in deep neural networks, such as CNNs and ResNets, 
+    helping regulate how much information passes from one layer to the next. 
+    It is commonly used in Highway Networks and ResNets, where gates determine whether an input is transformed or passed directly to the next layer,
+    aiding in gradient flow and feature learning. A key example is the Highway Network, where the transform gate $T(x)$ modulates the proportion of tranformed information
+    versus unchanged input using the formula $y = T(x) \cdot H(x) + (1 - T(x)) \cdot x$. Vertical gating is particularly useful in deep architectures to prevent vanishing 
+    gradients, making it effective for image classification and other deep learning tasks. However, it does not model temporal dependencies, as it only functions across 
+    layers, not time steps.
+    
+\end{enumerate}
 
 
 
