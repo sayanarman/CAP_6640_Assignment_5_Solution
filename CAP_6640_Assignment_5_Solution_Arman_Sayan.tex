@@ -86,10 +86,26 @@ Lastly benefit is that it allows higher learning rates without causing instabili
 Typically, deep NLP models require very small learning rates to avoid divergence, but batch normalization stabilizes activations, 
 enabling the use of more aggressive learning rates that speed up convergence.
 
-
 \pagebreak
 
-\item[Problem 4:]  Explain how very deep CNNs process text.
+\item[Problem 4:]  \hfill %Explain how very deep CNNs process text.
+
+Traditionally, sequence models like LSTMs and GRUs have dominated NLP due to their ability to handle sequential dependencies. 
+However, very deep CNNs which are inspired by image-processing architectures like VGG can be highly effective for NLP, 
+particularly in text classification tasks.
+
+Instead of relying on word embeddings and sequential processing, very deep CNNs extract features directly from character-level representations. 
+The model consists of multiple stacked convolutional layers, which progressively refine text representations, much like deep CNNs do for images. 
+The deeper the network, the more hierarchical and abstract the extracted linguistic features become.
+
+Very deep CNNs apply multiple convolutional layers, followed by pooling layers, to extract patterns in text at various levels. 
+This process is similar to how deep CNNs for vision detect simple edges in early layers and complex objects in deeper layers. 
+In NLP, this results in low-level character n-grams at shallow layers and high-level semantic representations at deeper layers.
+Local pooling at each stage reduces the temporal resolution while retaining key information.
+Stacking convolutional layers enables multi-scale text representation, allowing the model to capture both local and long-range dependencies.
+This fully convolutional architectures allows for parallel processing, significantly speeding up training.
+Deeper CNN architecture improves feature extraction, making the model more effective at capturing linguistic structures.
+By leveraging hierarchical feature learning, very deep CNNs can outperform sequence models in text classification tasks, especially when trained on large datasets.
 
 \pagebreak
 
