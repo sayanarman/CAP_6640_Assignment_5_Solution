@@ -193,7 +193,36 @@ However, by breaking it down into subwords, an NLP model can recognize morpholog
 
 \pagebreak
 
-\item[Problem 7:]  Describe fully character-level neural machine translation.
+\item[Problem 7:]  \hfill %Describe fully character-level neural machine translation.
+
+Traditional neural machine translation models rely on word-based tokenization, which can lead to several issues. 
+For instance, word-based models struggle with rare or unseen words. They also require large vocabularies to cover all possible words, 
+since languages with many word forms like Turkish, Finnish, and Arabic require extensive vocabulary lists.
+Lastly, tokenization at the word level may obscure relationships between words with similar roots.
+
+Fully character-level neural machine translation on the other hand is an approach where translation models process text at the character level instead of using 
+words or subwords as fundamental units. This method enables models to handle morphologically rich languages, spelling variations, and unknown words, making it 
+particularly effective for languages with complex word structures.
+
+Character-level neural machine translation follows the encoder-decoder structure, capturing fine-grained linguistic patterns.
+The first step in character-level neural machine translation involves mapping each character in the input sentence to a character embedding.
+These embeddings are passed through a CNN, which extract local patterns from the input text.
+After extracting character-level features using a CNN, the output is processed through a highway network layer.
+The highway network layer acts as a gating mechanism, deciding how much of the original character-level features should be retained or transformed.
+This is mathematically formulated as 
+
+\begin{center}
+    $t = \sigma(W_T y + b_T)$
+
+    $z = t \odot g(W_H y + b_H) + (1 - t) \odot y$
+\end{center}
+
+where $t$ is the transform gate that determines how much new information should be passed forward,
+$y$ is the CNN output containing character-level features, $g$ is a non-linear activation function like ReLU,
+and $z$ is the refined character-level representation that is sent to higher layers for processing.
+
+The resulting feature representations are then passed to LSTM, which captures long-range dependencies in the sentence.
+Finally, the LSTM output is fed into a softmax layer to generate the translation output.
 
 \pagebreak
 
@@ -204,7 +233,6 @@ However, by breaking it down into subwords, an NLP model can recognize morpholog
 \item[Problem 9:]  Compare bottom-up and neural summarization.
 
 \pagebreak
-
 
 \item[Problem 10:]  Discuss a method for handling irrelevant responses, generic outputs, repetition, and inconsistent persona in natural language generation.
 
