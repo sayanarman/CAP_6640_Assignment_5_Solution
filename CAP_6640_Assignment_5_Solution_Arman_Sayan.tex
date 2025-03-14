@@ -259,7 +259,7 @@ allowing the model to efficiently process words like "evde" ([ev, de], at home),
 
 \pagebreak
 
-\item[Problem 9:]  Compare bottom-up and neural summarization.
+\item[Problem 9:]  \hfill %Compare bottom-up and neural summarization.
 
 Bottom-up summarization first extracts important content from the original text and then generates a summary based on the extracted key phrases and sentences.
 This approach combines extractive and abstractive summarization, ensuring that the generated text remains factually consistent and informative.
@@ -269,9 +269,17 @@ In the abstractive phase, selected content is rewritten using an encoder-decoder
 to ensure coherent, fluent, and factually grounded text generation.
 This concept balances informativeness and conciseness by combining extraction and generation.
 
-Neural summarization, on the other hand, is a fully end-to-end approach that directly generates summaries from input text using deep learning models such as 
-Seq2Seq, Transformers, and Reinforcement Learning-based models. Unlike bottom-up summarization, it does not explicitly extract key content but instead learns semantic representations of the entire document to generate a fluent summary.
-
+RL-based neural summarization, on the other hand, is an advanced approach that optimizes text generation using reward-based training. 
+Unlike traditional models that use MLE, which trains models by maximizing word-level probabilities, RL trains models to optimize for long-term coherence, factuality, and human-preferred evaluation metrics.
+The reason why RL-based neural summariation is that they cover up the downsides of MLE-based models.
+Firstly, models are trained on selected summaries, but during inference, they must generate text from scratch, often leading to off-topic or incoherent outputs.
+Secondly, MLE-based models optimize for word-level accuracy, but summarization is evaluated using sentence-level metrics, causing a mismatch between training and evaluation.
+All these issues are adressed with a better training strategy to directly optimize for evaluation metrics, and with the inclusion of a reward function to 
+guide the model towards generating more human-like summaries.
+The summarization model is treated as an agent that generates text step by step, receiving reward signals based on the quality of the output.
+A reward function evaluates summary coherence, factual correctness, and diversity, while policy gradient methods such as REINFORCE 
+or SCST update the model to maximize expected rewards.
+However, designing an effective reward function might be the challenge of neural summarization, along with the high computational resources needed for training.
 
 \pagebreak
 
